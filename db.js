@@ -25,11 +25,11 @@ const Tasks = db.define('task', {
         allowNull: false,  
     },
     startTime: {
-        type: DataTypes.TIME,
+        type: DataTypes.STRING,
         allowNull: true
     },
     deadline: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         allowNull: true
     },
     done: {

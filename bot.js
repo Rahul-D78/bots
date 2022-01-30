@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 const { Client } = require('discord.js');
+const { Tasks, Questions } = require('./db');
 const bot = new Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
 
 const PREFIX = "$"
@@ -15,7 +16,7 @@ bot
 .on('error', console.error)
 
 //Message Event
-bot.on('messageCreate', (message) => {
+bot.on('messageCreate', async (message) => {
 
     if(message.author.bot === true) return;
 
@@ -27,6 +28,15 @@ bot.on('messageCreate', (message) => {
 
         console.log(CMD_NAME);
         console.log(args);
+        
+        if(CMD_NAME === 'botctl' && args[0] === 'get' && args[1] === 'tasks') {
+            todaysTask(message)
+        }
+
+        if(CMD_NAME === 'botctl' && args[0] === 'get' && args[1] === 'qestions') {
+            todaysQes(message)
+        }
+
         message.reply('hi')
     }
 
@@ -39,8 +49,39 @@ bot.on('messageCreate', (message) => {
     setInterval(() => {
         reminder(message)
     }, 1000 * 60 * 60);
+
+    todaysQes(message)
 })  
 
+async function todaysTask(message) {
+    
+    //getting all the tasks from the DB
+    await Tasks.findAll()
+    .then((tasks) => {
+        const todaysTask = tasks.filter((date) => {
+            return date === d.getDate()
+        })
+        message.reply(todaysTask);
+        console.log(todaysTask);
+    }).catch((e) => {
+        console.error(e)
+    })
+}
+
+async function todaysQes(message) {
+
+    //getting all the questions from the DB
+    await Questions.findAll()
+    .then((qes) => {
+        const todaysQes = qes.filter((date) => {
+            return date === d.getDate()
+        })
+        message.reply(todaysQes);
+        console.log(typeof(todaysQes));
+    }).catch((e) => {
+        console.error(e)
+    })
+}
 
 function reminder(message) {
 

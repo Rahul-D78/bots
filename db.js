@@ -1,5 +1,4 @@
-import { Sequelize, DataTypes } from 'sequelize';
-
+const { Sequelize, DataTypes } = require('sequelize');
 let db;
 
 if(process.env.DATABASE_URL) {
@@ -26,15 +25,16 @@ const Tasks = db.define('task', {
         allowNull: false,  
     },
     startTime: {
-        type: DataTypes.NUMBER,
-        allowNull: false
+        type: DataTypes.TIME,
+        allowNull: true
     },
-    endTime: {
-        type: DataTypes.NUMBER,
-        allowNull: false
+    deadline: {
+        type: DataTypes.DATE,
+        allowNull: true
     },
     done: {
         type: DataTypes.BOOLEAN,
+        defaultValue: false,
         allowNull: false
     },
     priority: {
@@ -44,7 +44,22 @@ const Tasks = db.define('task', {
 });
 
 //TODO: create a schema for questions 
+const Questions = db.define('questions', {
+    ID: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    section: {
+        type: DataTypes.STRING,
+        allowNull: false        
+    },
+    body: {
+        type: DataTypes.STRING,
+        allowNull: false
+    }
+}) 
 
-export default {
-    db, Tasks
+module.exports = {
+    Tasks, Questions, db
 }

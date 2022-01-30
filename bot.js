@@ -31,10 +31,11 @@ bot.on('messageCreate', (message) => {
     }
 
     if(message.content.startsWith("/pom_help")) {
-        message.reply('below are the possible \ncommands you can send')
+        message.reply(`Hlw ${message.author.username} I am POM BOT \nI can help you stay consistent in your work`)
     }
     
     //sending message after every 1 hour
+    reminder(message)
     setInterval(() => {
         reminder(message)
     }, 1000 * 60 * 60);

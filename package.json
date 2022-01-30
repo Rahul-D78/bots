@@ -1,10 +1,11 @@
 {
   "name": "POM_BOT",
+  "description": "This is confidential",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node bot.js",
-    "dev": "nodemon bot.js"
+    "start": "node sever.js",
+    "dev": "nodemon sever.js"
   },
   "license": "MIT",
   "dependencies": {
